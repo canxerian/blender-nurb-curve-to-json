@@ -1,12 +1,12 @@
 bl_info = {
-    "name": "Export NURB Curve to JSON",
+    "name": "Export NURBS Curve to JSON",
     "blender": (4, 20, 0),
     "category": "Import-Export",
-    "description": "Exports NURB Curve data to a JSON file",
+    "description": "Exports NURBS Curve data to a JSON file",
     "author": "Mark Nguyen",
     "version": (1, 0, 0),
     "doc_url": "https://github.com/canxerian/blender-nurb-curve-to-json",
-    "location": "Export > Export NURB Curve to JSON",
+    "location": "Export > Export NURBS Curve to JSON",
 }
 
 import bpy
@@ -14,9 +14,9 @@ import json
 import os
 
 class ExportNURBCurveToJSON(bpy.types.Operator):
-    """Export NURB Curve to JSON"""
+    """Export NURBS Curve to JSON"""
     bl_idname = "export.nurb_curve_to_json"
-    bl_label = "Export NURB Curve to JSON"
+    bl_label = "Export NURBS Curve to JSON"
     
     filepath: bpy.props.StringProperty(subtype="FILE_PATH")
 
@@ -24,24 +24,27 @@ class ExportNURBCurveToJSON(bpy.types.Operator):
         # Get the active object
         obj = context.object
         if not obj or obj.type != 'CURVE':
-            self.report({'ERROR'}, "No active NURB curve object")
+            self.report({'ERROR'}, "No active NURBS curve object")
             return {'CANCELLED'}
         
         curve = obj.data
         
-        # Check if it is a NURB curve
+        # Check if it is a NURBS curve
         if curve.splines[0].type != 'NURBS':
-            self.report({'ERROR'}, "Active curve is not a NURB curve")
+            self.report({'ERROR'}, "Active curve is not a NURBS curve")
             return {'CANCELLED'}
         
-        # Extract NURB curve data
+        # Extract NURBS curve data
         nurb_data = []
         for spline in curve.splines:
             if spline.type == 'NURBS':
                 points = []
                 for point in spline.points:
                     points.append({
-                        'co': [point.co.x, point.co.y, point.co.z, point.co.w],
+                        'x': point.co.x,
+                        'y': point.co.y,
+                        'z': point.co.z,
+                        'w': point.co.w,
                         'weight': point.weight
                     })
                 nurb_data.append({
@@ -56,7 +59,7 @@ class ExportNURBCurveToJSON(bpy.types.Operator):
         with open(self.filepath, 'w') as f:
             f.write(nurb_json)
         
-        self.report({'INFO'}, "NURB curve exported successfully")
+        self.report({'INFO'}, "NURBS curve exported successfully")
         return {'FINISHED'}
 
     def invoke(self, context, event):
@@ -64,7 +67,7 @@ class ExportNURBCurveToJSON(bpy.types.Operator):
         return {'RUNNING_MODAL'}
 
 def menu_func_export(self, context):
-    self.layout.operator(ExportNURBCurveToJSON.bl_idname, text="NURB Curve to JSON")
+    self.layout.operator(ExportNURBCurveToJSON.bl_idname, text="NURBS Curve to JSON")
 
 def register():
     bpy.utils.register_class(ExportNURBCurveToJSON)
