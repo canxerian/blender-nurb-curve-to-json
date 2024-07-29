@@ -2,12 +2,11 @@ bl_info = {
     "name": "Export NURB Curve to JSON",
     "blender": (4, 20, 0),
     "category": "Import-Export",
-    "description": "1. Create NURB Curve, 2. Export > NURB Curve to JSON, 3. Use data in 3D engine, e.g three.js",
+    "description": "Exports NURB Curve data to a JSON file",
     "author": "Mark Nguyen",
     "version": (1, 0, 0),
-    "doc_url": "https://github.com/canxerian/blender-nurb-to-json",
-    "support": "https://github.com/canxerian/blender-nurb-to-json/issues",
-    "location": "Export > Export NURB Curve to JSON"
+    "doc_url": "https://github.com/canxerian/blender-nurb-curve-to-json",
+    "location": "Export > Export NURB Curve to JSON",
 }
 
 import bpy
