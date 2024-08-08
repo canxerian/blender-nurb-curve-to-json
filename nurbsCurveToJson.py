@@ -1,6 +1,6 @@
 bl_info = {
     "name": "Export NURBS Curve to JSON",
-    "blender": (4, 20, 0),
+    "blender": (2, 80, 0),
     "category": "Import-Export",
     "description": "Exports NURBS Curve data to a JSON file",
     "author": "Mark Nguyen",
